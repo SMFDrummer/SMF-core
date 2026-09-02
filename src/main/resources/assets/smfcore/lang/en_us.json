@@ -119,5 +119,6 @@
   "rei_categories.smfcore.large_autoclave": "Large Autoclave",
   "block.smfcore.large_vacuum_freezer": "Large Vacuum Freezer",
   "rei_categories.smfcore.large_vacuum_freezer": "Large Vacuum Freezer",
+  "smfcore.ui.view_recipes": "View Recipes",
   "itemGroup.smfcore": "SMF Core"
 }

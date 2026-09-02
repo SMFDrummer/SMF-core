@@ -31,6 +31,7 @@ import com.lowdragmc.lowdraglib2.gui.ui.elements.TextElement
 import com.lowdragmc.lowdraglib2.gui.ui.elements.UITemplateElement
 import com.lowdragmc.lowdraglib2.gui.ui.event.UIEvents
 import com.lowdragmc.lowdraglib2.integration.xei.IngredientIO
+import com.lowdragmc.lowdraglib2.integration.xei.jei.LDLibJEIPlugin
 import com.lowdragmc.lowdraglib2.utils.FluidHelper
 import com.lowdragmc.lowdraglib2.utils.virtuallevel.TrackedDummyWorld
 import com.smf.core.items.SMFItems
@@ -41,6 +42,7 @@ import dev.vfyjxf.taffy.style.FlexWrap
 import dev.vfyjxf.taffy.style.TaffyDisplay
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.StringTag
@@ -53,16 +55,28 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.LinkedHashMap
 import kotlin.math.max
+import mezz.jei.api.recipe.RecipeType
 
 /** Runtime bindings for the single editor-authored multiblock UI. */
 object MachineUIs {
     private const val TEMPLATE_PATH = "./ldlib2/assets/ldlib2/resources/global/multiblock_gui.ui.nbt"
+
+    // Recipe slot rows: max 4 slots per row so long recipes wrap instead of
+    // stretching the overclock card horizontally. ItemSlot is 18x18.
+    private const val SLOT_SIZE = 18f
+    private const val SLOT_ROW_GAP = 2f
+    private const val SLOTS_PER_ROW = 4
+    private val SLOT_ROW_MAX_WIDTH = SLOTS_PER_ROW * SLOT_SIZE + (SLOTS_PER_ROW - 1) * SLOT_ROW_GAP
+
+    // Mirrors MI's ViewerUtil.PROBABILITY_FORMAT ("#.#" drops trailing zeros).
+    private val PROBABILITY_FORMAT = java.text.DecimalFormat("#.#")
 
     /** Kept as the public entry point used by the current gray-test menu. */
     fun vacuumFreezer(ctx: MultiblockUIContext): UIElement = multiblock(ctx)
@@ -82,6 +96,7 @@ object MachineUIs {
         val runtimeState = RuntimeState(ctx)
         bindTitle(root, ctx)
         bindInfoPage(root, runtimeState)
+        bindInfoPanelRecipeLookup(root, ctx)
         bindInventory(root, ctx)
         bindModuleRail(root, ctx)
         bindTabs(root, ctx)
@@ -294,6 +309,29 @@ object MachineUIs {
         update()
     }
 
+    /**
+     * Vanilla-MI style recipe lookup: hovering the multiblock info panel shows a
+     * "view recipes" tooltip, and clicking it opens the machine's JEI recipe
+     * category (all recipes of this machine).
+     */
+    private fun bindInfoPanelRecipeLookup(root: UITemplateElement, ctx: MultiblockUIContext) {
+        val infoPanel = root.find<UIElement>("multiblock_info") ?: return
+        infoPanel.style.tooltips(Component.translatable("smfcore.ui.view_recipes"))
+        infoPanel.addEventListener(UIEvents.CLICK) { event ->
+            if (event.button == 0) {
+                openMachineRecipes(ctx)
+            }
+        }
+    }
+
+    private fun openMachineRecipes(ctx: MultiblockUIContext) {
+        val block = ctx.be?.blockState?.block ?: return
+        val blockId = BuiltInRegistries.BLOCK.getKey(block)
+        val jeiRuntime = LDLibJEIPlugin.jeiRuntime ?: return
+        val recipeType = RecipeType.create(blockId.namespace, blockId.path, RecipeHolder::class.java)
+        jeiRuntime.recipesGui.showTypes(listOf(recipeType))
+    }
+
     private fun bindInventory(root: UITemplateElement, ctx: MultiblockUIContext) {
         for (index in 0 until 36) {
             root.find<ItemSlot>("inventory_$index")?.apply {
@@ -305,15 +343,33 @@ object MachineUIs {
     private fun bindModuleRail(root: UITemplateElement, ctx: MultiblockUIContext) {
         val redstoneSlot = root.find<ItemSlot>("mi_origin_redstone_module_placeholder")?.apply {
             setAvailable(ctx.redstoneControl() != null)
-            if (ctx.redstoneControl() != null) bind(redstoneModuleSlot(ctx))
+            if (ctx.redstoneControl() != null) {
+                bind(redstoneModuleSlot(ctx))
+                addModuleSlotOverlay(
+                    "smfcore:textures/gui/redstone_module_layer.png",
+                    MIText.AcceptsRedstoneControlModule.text(),
+                )
+            }
         }
         root.find<ItemSlot>("mi_origin_upgrade_module_placeholder")?.apply {
             setAvailable(ctx.upgrades() != null)
-            if (ctx.upgrades() != null) bind(upgradeModuleSlot(ctx))
+            if (ctx.upgrades() != null) {
+                bind(upgradeModuleSlot(ctx))
+                addModuleSlotOverlay(
+                    "smfcore:textures/gui/upgrade_module_layer.png",
+                    MIText.AcceptsUpgrades.text(),
+                )
+            }
         }
         root.find<ItemSlot>("mi_origin_overdrive_module_placeholder")?.apply {
             setAvailable(ctx.overdrive() != null)
-            if (ctx.overdrive() != null) bind(overdriveModuleSlot(ctx))
+            if (ctx.overdrive() != null) {
+                bind(overdriveModuleSlot(ctx))
+                addModuleSlotOverlay(
+                    "smfcore:textures/gui/overdrive_module_layer.png",
+                    MIText.AcceptsOverdriveModule.text(),
+                )
+            }
         }
 
         val button = root.find<Button>("toggle_redstone_module_mode_button")
@@ -337,6 +393,24 @@ object MachineUIs {
 
         root.addEventListener(UIEvents.TICK) { update() }
         update()
+    }
+
+    /**
+     * Adds the vanilla-MI module slot look: an empty-slot overlay texture plus
+     * the "accepts ..." hover tooltip shown only while the slot is empty.
+     */
+    private fun ItemSlot.addModuleSlotOverlay(texture: String, tooltip: Component) {
+        slotStyle.slotOverlay(SpriteTexture.of(texture))
+        addEventListener(UIEvents.HOVER_TOOLTIPS) { event ->
+            if (getValue().isEmpty) {
+                event.hoverTooltips = com.lowdragmc.lowdraglib2.gui.ui.event.HoverTooltips(
+                    listOf(tooltip),
+                    null,
+                    null,
+                    null,
+                )
+            }
+        }
     }
 
     private fun bindTabs(root: UITemplateElement, ctx: MultiblockUIContext) {
@@ -681,22 +755,37 @@ object MachineUIs {
         recipeBody.layout.flexDirection(FlexDirection.ROW)
         recipeBody.layout.widthPercent(100f)
         recipeBody.layout.alignItems(dev.vfyjxf.taffy.style.AlignItems.CENTER)
+        recipeBody.layout.justifyContent(dev.vfyjxf.taffy.style.AlignContent.SPACE_BETWEEN)
         recipeBody.layout.gapAll(3f)
 
         val inputs = UIElement().setId("recipe_inputs_$recipeId")
-        inputs.layout.flexDirection(FlexDirection.ROW)
-        inputs.layout.flexWrap(FlexWrap.WRAP)
-        inputs.layout.flexGrow(1f)
-        inputs.layout.justifyContent(dev.vfyjxf.taffy.style.AlignContent.FLEX_END)
-        recipe.itemInputs.forEach { input ->
-            input.ingredient().items.firstOrNull()?.let { item ->
-                inputs.addChild(recipeItemSlot(item, input.amount, input.probability, IngredientIO.INPUT))
-            }
+        inputs.layout.flexDirection(FlexDirection.COLUMN)
+        inputs.layout.gapAll(2f)
+        inputs.layout.alignItems(dev.vfyjxf.taffy.style.AlignItems.FLEX_START)
+        // Items first, fluids on their own rows below; each row caps at 4 slots.
+        if (recipe.itemInputs.isNotEmpty()) {
+            inputs.addChild(
+                slotRow(
+                    "recipe_item_inputs_$recipeId",
+                    recipe.itemInputs.mapNotNull { input ->
+                        input.ingredient().items.firstOrNull()?.let { item ->
+                            recipeItemSlot(item, input.amount, input.probability, IngredientIO.INPUT)
+                        }
+                    },
+                )
+            )
         }
-        recipe.fluidInputs.forEach { input ->
-            input.fluid().stacks.firstOrNull()?.let { fluid ->
-                inputs.addChild(recipeFluidSlot(fluid.fluid, input.amount, input.probability, IngredientIO.INPUT))
-            }
+        if (recipe.fluidInputs.isNotEmpty()) {
+            inputs.addChild(
+                slotRow(
+                    "recipe_fluid_inputs_$recipeId",
+                    recipe.fluidInputs.mapNotNull { input ->
+                        input.fluid().stacks.firstOrNull()?.let { fluid ->
+                            recipeFluidSlot(fluid.fluid, input.amount, input.probability, IngredientIO.INPUT)
+                        }
+                    },
+                )
+            )
         }
 
         val operation = UIElement().setId("recipe_operation_$recipeId")
@@ -710,15 +799,29 @@ object MachineUIs {
         )
 
         val outputs = UIElement().setId("recipe_outputs_$recipeId")
-        outputs.layout.flexDirection(FlexDirection.ROW)
-        outputs.layout.flexWrap(FlexWrap.WRAP)
-        outputs.layout.flexGrow(1f)
-        outputs.layout.justifyContent(dev.vfyjxf.taffy.style.AlignContent.FLEX_START)
-        recipe.itemOutputs.forEach { output ->
-            outputs.addChild(recipeItemSlot(output.stack, output.amount, output.probability, IngredientIO.OUTPUT))
+        outputs.layout.flexDirection(FlexDirection.COLUMN)
+        outputs.layout.gapAll(2f)
+        outputs.layout.alignItems(dev.vfyjxf.taffy.style.AlignItems.FLEX_START)
+        // Items first, fluids on their own rows below; each row caps at 4 slots.
+        if (recipe.itemOutputs.isNotEmpty()) {
+            outputs.addChild(
+                slotRow(
+                    "recipe_item_outputs_$recipeId",
+                    recipe.itemOutputs.map { output ->
+                        recipeItemSlot(output.stack, output.amount, output.probability, IngredientIO.OUTPUT)
+                    },
+                )
+            )
         }
-        recipe.fluidOutputs.forEach { output ->
-            outputs.addChild(recipeFluidSlot(output.fluid, output.amount, output.probability, IngredientIO.OUTPUT))
+        if (recipe.fluidOutputs.isNotEmpty()) {
+            outputs.addChild(
+                slotRow(
+                    "recipe_fluid_outputs_$recipeId",
+                    recipe.fluidOutputs.map { output ->
+                        recipeFluidSlot(output.fluid, output.amount, output.probability, IngredientIO.OUTPUT)
+                    },
+                )
+            )
         }
 
         recipeBody.addChildren(inputs, operation, outputs)
@@ -819,6 +922,38 @@ object MachineUIs {
         }
     }
 
+    /**
+     * A wrapping slot row that caps at {@link #SLOTS_PER_ROW} slots per line.
+     * The row width fits its content but never exceeds the 4-slot maximum, so
+     * long slot lists wrap instead of stretching the recipe card horizontally.
+     */
+    private fun slotRow(id: String, slots: List<UIElement>): UIElement {
+        val row = UIElement().setId(id)
+        row.layout.flexDirection(FlexDirection.ROW)
+        row.layout.flexWrap(FlexWrap.WRAP)
+        row.layout.gapAll(SLOT_ROW_GAP)
+        row.layout.widthFitContent()
+        row.layout.maxWidth(SLOT_ROW_MAX_WIDTH)
+        slots.forEach(row::addChild)
+        return row
+    }
+
+    /**
+     * Same tooltip MI shows in its JEI/REI categories: null for 100%, "Not
+     * consumed" for 0%, otherwise "Consumption/Production Chance: xx %" in
+     * yellow, depending on whether the slot is an input (damage chance) or an
+     * output (yield chance).
+     */
+    private fun probabilityTooltip(probability: Float, input: Boolean): Component? {
+        if (probability == 1f) return null
+        val text = when {
+            probability == 0f -> MIText.NotConsumed.text()
+            input -> MIText.ChanceConsumption.text(PROBABILITY_FORMAT.format(probability * 100))
+            else -> MIText.ChanceProduction.text(PROBABILITY_FORMAT.format(probability * 100))
+        }
+        return text.setStyle(TextHelper.YELLOW)
+    }
+
     private fun recipeItemSlot(
         item: ItemStack,
         amount: Int,
@@ -826,10 +961,12 @@ object MachineUIs {
         io: IngredientIO,
     ): ItemSlot {
         val icon = item.copyWithCount(1)
-        return UnlimitedMaterialItemSlot(icon, amount.coerceAtLeast(1))
+        val slot = UnlimitedMaterialItemSlot(icon, amount.coerceAtLeast(1))
             .setItem(icon, false)
             .xeiRecipeIngredient(io)
             .xeiRecipeSlot(io, probability)
+        probabilityTooltip(probability, io == IngredientIO.INPUT)?.let { slot.style.tooltips(it) }
+        return slot
     }
 
     private fun recipeFluidSlot(
@@ -839,7 +976,7 @@ object MachineUIs {
         io: IngredientIO,
     ): FluidSlot {
         val displayAmount = amount.coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
-        return FluidSlot()
+        val slot = FluidSlot()
             .setCapacity(displayAmount)
             .setFluid(FluidStack(fluid, displayAmount), false)
             .apply {
@@ -848,6 +985,8 @@ object MachineUIs {
             }
             .xeiRecipeIngredient(io)
             .xeiRecipeSlot(io, probability)
+        probabilityTooltip(probability, io == IngredientIO.INPUT)?.let { slot.style.tooltips(it) }
+        return slot
     }
 
     private inline fun <reified T : UIElement> UIElement.find(id: String): T? =

@@ -120,5 +120,6 @@
   "rei_categories.smfcore.large_autoclave": "\u5927\u578b\u9ad8\u538b\u7ed3\u6676\u5ba4",
   "block.smfcore.large_vacuum_freezer": "\u5927\u578b\u771f\u7a7a\u51b7\u5374\u673a",
   "rei_categories.smfcore.large_vacuum_freezer": "\u5927\u578b\u771f\u7a7a\u51b7\u5374\u673a",
+  "smfcore.ui.view_recipes": "\u67e5\u770b\u914d\u65b9",
   "itemGroup.smfcore": "SMF \u6838\u5fc3"
 }
