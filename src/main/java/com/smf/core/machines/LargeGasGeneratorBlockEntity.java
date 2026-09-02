@@ -239,7 +239,8 @@ public class LargeGasGeneratorBlockEntity extends MultiblockMachineBlockEntity i
         // gold-highlighted numbers (EU_PER_TICK_PARSER renders "8192 EU/t").
         return List.of(
                 new MITooltips.Line(MIText.MaxEuProduction).arg(MAX_EU, MITooltips.EU_PER_TICK_PARSER).build(),
-                new MITooltips.Line(MIText.AcceptAnyFluidFuels).build());
+                Component.translatable("smfcore.generator.accept_any_liquefied_gas_fuels")
+                        .setStyle(MITooltips.DEFAULT_STYLE));
     }
 
     public static LargeGasGeneratorBlockEntity create(BlockPos pos, BlockState state) {

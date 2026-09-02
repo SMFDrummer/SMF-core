@@ -120,5 +120,6 @@
   "block.smfcore.large_vacuum_freezer": "Large Vacuum Freezer",
   "rei_categories.smfcore.large_vacuum_freezer": "Large Vacuum Freezer",
   "smfcore.ui.view_recipes": "View Recipes",
+  "smfcore.generator.accept_any_liquefied_gas_fuels": "Consumes any Liquefied Gas Fuel (Check REI for EU/mb production)",
   "itemGroup.smfcore": "SMF Core"
 }

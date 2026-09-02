@@ -2,6 +2,7 @@ package com.smf.core.machines.ui
 
 import aztech.modern_industrialization.MIItem
 import aztech.modern_industrialization.MIText
+import aztech.modern_industrialization.compat.rei.machines.ReiMachineRecipes
 import aztech.modern_industrialization.inventory.HackySlot
 import aztech.modern_industrialization.items.RedstoneControlModuleItem
 import aztech.modern_industrialization.machines.MachineBlockEntity
@@ -34,6 +35,7 @@ import com.lowdragmc.lowdraglib2.integration.xei.IngredientIO
 import com.lowdragmc.lowdraglib2.integration.xei.jei.LDLibJEIPlugin
 import com.lowdragmc.lowdraglib2.utils.FluidHelper
 import com.lowdragmc.lowdraglib2.utils.virtuallevel.TrackedDummyWorld
+import com.smf.core.client.jei.LiquefiedGasFuelsCategory
 import com.smf.core.items.SMFItems
 import com.smf.core.machines.AdvancedOverdriveComponent
 import aztech.modern_industrialization.util.TextHelper
@@ -328,8 +330,30 @@ object MachineUIs {
         val block = ctx.be?.blockState?.block ?: return
         val blockId = BuiltInRegistries.BLOCK.getKey(block)
         val jeiRuntime = LDLibJEIPlugin.jeiRuntime ?: return
-        val recipeType = RecipeType.create(blockId.namespace, blockId.path, RecipeHolder::class.java)
-        jeiRuntime.recipesGui.showTypes(listOf(recipeType))
+
+        // Same as MI's MachineGuiContainerHandler: look up the categories this
+        // machine registered as click areas. The EBF, for instance, registers one
+        // category per coil tier (electric_blast_furnace_<coil>), so a single
+        // block-id recipe type does not exist for it.
+        val registered = ReiMachineRecipes.machineToClickAreaCategory[blockId] ?: emptyList()
+        val types = registered.mapNotNull { clickArea ->
+            jeiRuntime.recipeManager.getRecipeType(clickArea.category).orElse(null)
+        }.filter { recipeType ->
+            jeiRuntime.recipeManager.createRecipeLookup(recipeType).get().anyMatch { true }
+        }
+        if (types.isNotEmpty()) {
+            jeiRuntime.recipesGui.showTypes(types)
+            return
+        }
+
+        // Generators have no machine recipe category: jump straight to their fuel page.
+        val fuelPage: RecipeType<*> = when (blockId.toString()) {
+            "smfcore:large_gas_generator" -> LiquefiedGasFuelsCategory.TYPE
+            "modern_industrialization:large_diesel_generator" ->
+                RecipeType.create("modern_industrialization", "fluid_fuels", Fluid::class.java)
+            else -> RecipeType.create(blockId.namespace, blockId.path, RecipeHolder::class.java)
+        }
+        jeiRuntime.recipesGui.showTypes(listOf(fuelPage))
     }
 
     private fun bindInventory(root: UITemplateElement, ctx: MultiblockUIContext) {

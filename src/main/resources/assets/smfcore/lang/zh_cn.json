@@ -121,5 +121,6 @@
   "block.smfcore.large_vacuum_freezer": "\u5927\u578b\u771f\u7a7a\u51b7\u5374\u673a",
   "rei_categories.smfcore.large_vacuum_freezer": "\u5927\u578b\u771f\u7a7a\u51b7\u5374\u673a",
   "smfcore.ui.view_recipes": "\u67e5\u770b\u914d\u65b9",
+  "smfcore.generator.accept_any_liquefied_gas_fuels": "\u6d88\u8017\u4efb\u610f\u6db2\u5316\u6c14\u4f53\u71c3\u6599\uff08\u67e5\u770bREI\u4e86\u89e3EU/mB\u4ea7\u51fa\uff09",
   "itemGroup.smfcore": "SMF \u6838\u5fc3"
 }
