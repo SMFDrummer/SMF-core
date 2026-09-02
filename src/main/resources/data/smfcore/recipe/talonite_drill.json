@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC",
+    "DEB",
+    "FDA"
+  ],
+  "key": {
+    "A": {
+      "tag": "c:gears/iron"
+    },
+    "B": {
+      "tag": "modern_industrialization:item_pipes"
+    },
+    "C": {
+      "tag": "c:drill_heads/talonite"
+    },
+    "D": {
+      "item": "modern_industrialization:motor"
+    },
+    "E": {
+      "item": "modern_industrialization:analog_circuit"
+    },
+    "F": {
+      "item": "modern_industrialization:silver_cable"
+    }
+  },
+  "result": {
+    "id": "smfcore:talonite_drill",
+    "count": 4
+  }
+}

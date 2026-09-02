@@ -1,0 +1,40 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "duration": 300,
+  "eu": 32,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:sulfur_dust",
+      "amount": 1,
+      "probability": 0.05
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:benzene",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:propene",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:phenol",
+      "amount": 800
+    },
+    {
+      "fluid": "smfcore:acetone",
+      "amount": 600
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 400
+    }
+  ]
+}

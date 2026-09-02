@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "smfcore:block/large_electrolyzer"
+    }
+  }
+}

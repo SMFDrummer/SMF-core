@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:electrolyzer",
+  "eu": 64,
+  "duration": 160,
+  "item_inputs": {
+    "item": "smfcore:sodium_hydroxide_dust",
+    "amount": 4
+  },
+  "item_outputs": {
+    "item": "modern_industrialization:sodium_dust",
+    "amount": 4
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 1000
+    }
+  ]
+}

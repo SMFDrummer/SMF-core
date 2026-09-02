@@ -1,0 +1,17 @@
+{
+  "type": "modern_industrialization:furnace",
+  "eu": 4,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "smfcore:adamantine_debris",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:adamantine_scrap",
+      "amount": 1
+    }
+  ]
+}

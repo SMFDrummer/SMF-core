@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 32,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "item": "smfcore:fluorite_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:hydrofluoric_acid",
+      "amount": 1000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:calcium_sulfate_dust",
+      "amount": 1
+    }
+  ]
+}

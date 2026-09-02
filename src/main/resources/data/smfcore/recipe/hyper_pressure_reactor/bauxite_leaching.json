@@ -1,0 +1,34 @@
+{
+  "type": "smfcore:hyper_pressure_reactor",
+  "eu": 64,
+  "duration": 160,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:bauxite_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:steam",
+      "amount": 500
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:sodium_aluminate",
+      "amount": 1500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:red_mud",
+      "amount": 1,
+      "probability": 0.75
+    }
+  ]
+}

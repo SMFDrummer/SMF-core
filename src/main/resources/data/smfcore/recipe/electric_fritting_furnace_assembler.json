@@ -1,0 +1,37 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:cupronickel_wire_magnetic",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:analog_circuit",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:piston",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:basic_machine_hull",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:heatproof_machine_casing",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:silver_cable",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:electric_fritting_furnace",
+      "amount": 1
+    }
+  ]
+}

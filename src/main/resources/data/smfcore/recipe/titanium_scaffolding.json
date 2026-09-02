@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "ABA",
+    "B B",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "tag": "c:plates/titanium"
+    },
+    "B": {
+      "tag": "c:rods/titanium"
+    }
+  },
+  "result": {
+    "id": "smfcore:titanium_scaffolding",
+    "count": 4
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EFE"
+  ],
+  "key": {
+    "A": {
+      "item": "modern_industrialization:advanced_pump"
+    },
+    "B": {
+      "item": "modern_industrialization:digital_circuit"
+    },
+    "C": {
+      "item": "modern_industrialization:stainless_steel_gear"
+    },
+    "D": {
+      "item": "modern_industrialization:turbo_machine_hull"
+    },
+    "E": {
+      "item": "modern_industrialization:aluminum_cable"
+    },
+    "F": {
+      "item": "modern_industrialization:clean_stainless_steel_machine_casing"
+    }
+  },
+  "result": {
+    "id": "smfcore:large_gas_generator"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "smfcore:hyper_pressure_reactor",
+  "duration": 160,
+  "eu": 128,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:monazite_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 5000
+    },
+    {
+      "fluid": "modern_industrialization:steam",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:rare_earth_hydroxide_mixture",
+      "amount": 5
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:trisodium_phosphate",
+      "amount": 4000
+    },
+    {
+      "fluid": "modern_industrialization:helium",
+      "amount": 50
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "duration": 200,
+  "eu": 16,
+  "item_inputs": [
+    {
+      "item": "smfcore:sodium_hydroxide_dust",
+      "amount": 1,
+      "probability": 0.05
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:acetone",
+      "amount": 1000
+    },
+    {
+      "fluid": "smfcore:sodium_hypochlorite",
+      "amount": 3000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:chloroform",
+      "amount": 800
+    },
+    {
+      "fluid": "smfcore:sodium_acetate",
+      "amount": 1200
+    },
+    {
+      "fluid": "smfcore:salt_water",
+      "amount": 500
+    }
+  ]
+}

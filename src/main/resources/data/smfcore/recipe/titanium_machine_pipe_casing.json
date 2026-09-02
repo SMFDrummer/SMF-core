@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "tag": "c:plates/titanium"
+    },
+    "B": {
+      "tag": "modern_industrialization:fluid_pipes"
+    },
+    "C": {
+      "item": "smfcore:titanium_scaffolding"
+    }
+  },
+  "result": {
+    "id": "smfcore:titanium_machine_pipe_casing",
+    "count": 2
+  }
+}

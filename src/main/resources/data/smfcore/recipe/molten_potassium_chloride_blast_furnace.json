@@ -1,0 +1,13 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 32,
+  "duration": 400,
+  "item_inputs": {
+    "item": "smfcore:potassium_chloride_dust",
+    "amount": 1
+  },
+  "fluid_outputs": {
+    "fluid": "smfcore:molten_potassium_chloride",
+    "amount": 1000
+  }
+}

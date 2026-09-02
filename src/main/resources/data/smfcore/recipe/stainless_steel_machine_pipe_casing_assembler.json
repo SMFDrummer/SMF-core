@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "tag": "c:plates/stainless_steel",
+      "amount": 4
+    },
+    {
+      "tag": "modern_industrialization:fluid_pipes",
+      "amount": 4
+    },
+    {
+      "item": "smfcore:stainless_steel_scaffolding",
+      "amount": 1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:stainless_steel_machine_pipe_casing",
+      "amount": 2
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 32,
+  "duration": 400,
+  "item_inputs": {
+    "item": "smfcore:cryolite_dust",
+    "amount": 1
+  },
+  "fluid_outputs": {
+    "fluid": "smfcore:molten_cryolite",
+    "amount": 1000
+  }
+}

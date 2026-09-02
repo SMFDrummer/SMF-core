@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "AEA"
+  ],
+  "key": {
+    "A": {
+      "item": "modern_industrialization:advanced_pump"
+    },
+    "B": {
+      "item": "modern_industrialization:digital_circuit"
+    },
+    "C": {
+      "item": "modern_industrialization:titanium_gear"
+    },
+    "D": {
+      "item": "modern_industrialization:turbo_machine_hull"
+    },
+    "E": {
+      "item": "modern_industrialization:distillery"
+    }
+  },
+  "result": {
+    "id": "smfcore:cryogenic_fractionation_tower"
+  }
+}

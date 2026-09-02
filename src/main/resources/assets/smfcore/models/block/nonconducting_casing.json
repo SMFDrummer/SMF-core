@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "smfcore:block/nonconducting_casing_bottom",
+    "top": "smfcore:block/nonconducting_casing_top",
+    "side": "smfcore:block/nonconducting_casing"
+  }
+}

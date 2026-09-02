@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "modern_industrialization:rubber_sheet"
+    },
+    "B": {
+      "item": "smfcore:steel_scaffolding"
+    }
+  },
+  "result": {
+    "id": "smfcore:nonconducting_casing",
+    "count": 2
+  }
+}

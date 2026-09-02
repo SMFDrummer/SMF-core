@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 4,
+  "duration": 80,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:salt_dust",
+      "amount": 2
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:salt_water",
+      "amount": 1000
+    }
+  ]
+}

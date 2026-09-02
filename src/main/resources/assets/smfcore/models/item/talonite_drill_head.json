@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "smfcore:item/talonite_drill_head"
+  }
+}

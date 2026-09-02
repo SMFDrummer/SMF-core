@@ -1,0 +1,17 @@
+{
+  "type": "smfcore:large_autoclave",
+  "eu": 16,
+  "duration": 200,
+  "fluid_inputs": {
+    "fluid": "smfcore:rare_earth_chloride",
+    "amount": 1000
+  },
+  "item_outputs": {
+    "item": "smfcore:hydrated_rare_earth_chloride",
+    "amount": 1
+  },
+  "fluid_outputs": {
+    "fluid": "modern_industrialization:steam",
+    "amount": 500
+  }
+}

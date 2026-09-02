@@ -1,0 +1,33 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "modern_industrialization:robot_arm",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:digital_circuit",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:clean_stainless_steel_machine_casing",
+      "amount": 2
+    },
+    {
+      "item": "modern_industrialization:chemical_reactor",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:large_pump",
+      "amount": 2
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:hyper_pressure_reactor",
+      "amount": 1
+    }
+  ]
+}

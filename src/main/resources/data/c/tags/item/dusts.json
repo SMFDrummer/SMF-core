@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "#c:dusts/tungsten_carbide",
+    "#c:dusts/cobalt",
+    "#c:dusts/talonite",
+    "#c:dusts/fluorite",
+    "#c:dusts/sodium_hydroxide",
+    "#c:dusts/calcium_sulfate",
+    "#c:dusts/cryolite",
+    "#c:dusts/rare_earth"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "   ",
+    " A ",
+    "B B"
+  ],
+  "key": {
+    "A": {
+      "item": "smfcore:nonconducting_casing"
+    },
+    "B": {
+      "item": "modern_industrialization:digital_circuit"
+    }
+  },
+  "result": {
+    "id": "smfcore:electrolytic_cell",
+    "count": 2
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "smfcore:rotating_glass_reactor",
+  "duration": 2000,
+  "eu": 1,
+  "fluid_inputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:lava",
+      "amount": 1
+    }
+  ]
+}

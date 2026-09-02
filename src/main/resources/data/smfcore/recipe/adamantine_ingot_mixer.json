@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:mixer",
+  "eu": 32,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "smfcore:adamantine_scrap",
+      "amount": 4
+    },
+    {
+      "item": "smfcore:cobalt_ingot",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:adamantine_ingot",
+      "amount": 2
+    }
+  ]
+}

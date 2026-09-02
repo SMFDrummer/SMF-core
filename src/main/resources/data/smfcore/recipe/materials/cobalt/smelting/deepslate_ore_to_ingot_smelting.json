@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": {
+    "item": "smfcore:deepslate_cobalt_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "smfcore:cobalt_ingot"
+  }
+}

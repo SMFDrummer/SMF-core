@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "smfcore:adamantine_upgrade_smithing_template"
+  },
+  "base": {
+    "item": "minecraft:book"
+  },
+  "addition": {
+    "item": "smfcore:adamantine_ingot"
+  },
+  "result": {
+    "id": "minecraft:enchanted_book",
+    "components": {
+      "minecraft:stored_enchantments": {
+        "smfcore:adamantine": 1
+      }
+    }
+  }
+}

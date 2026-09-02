@@ -1,0 +1,25 @@
+{
+  "type": "smfcore:cryogenic_fractionation_tower",
+  "duration": 200,
+  "eu": 128,
+  "fluid_inputs": [
+    {
+      "amount": 30000,
+      "fluid": "modern_industrialization:liquid_air"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 6500,
+      "fluid": "modern_industrialization:oxygen"
+    },
+    {
+      "amount": 23150,
+      "fluid": "modern_industrialization:nitrogen"
+    },
+    {
+      "amount": 350,
+      "fluid": "modern_industrialization:argon"
+    }
+  ]
+}

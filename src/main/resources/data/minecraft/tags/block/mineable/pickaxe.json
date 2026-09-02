@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "smfcore:steel_scaffolding",
+    "smfcore:cobalt_ore",
+    "smfcore:deepslate_cobalt_ore",
+    "smfcore:cobalt_block",
+    "smfcore:raw_cobalt_block",
+    "smfcore:electric_fritting_furnace",
+    "smfcore:adamantine_debris",
+    "smfcore:adamantine_block",
+    "smfcore:silver_ore",
+    "smfcore:stainless_steel_machine_pipe_casing",
+    "smfcore:steel_machine_pipe_casing",
+    "smfcore:stainless_steel_scaffolding",
+    "smfcore:tempered_glass",
+    "smfcore:nonconducting_casing",
+    "smfcore:electrolytic_cell",
+    "smfcore:fluorite_ore",
+    "smfcore:deepslate_fluorite_ore"
+  ]
+}

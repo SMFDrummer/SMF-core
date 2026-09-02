@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DBD"
+  ],
+  "key": {
+    "A": {
+      "item": "modern_industrialization:advanced_pump"
+    },
+    "B": {
+      "item": "modern_industrialization:digital_circuit"
+    },
+    "C": {
+      "item": "modern_industrialization:vacuum_freezer"
+    },
+    "D": {
+      "item": "modern_industrialization:frostproof_machine_casing"
+    }
+  },
+  "result": {
+    "id": "smfcore:large_vacuum_freezer"
+  }
+}

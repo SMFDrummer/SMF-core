@@ -1,0 +1,29 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "duration": 200,
+  "eu": 32,
+  "item_inputs": [
+    {
+      "item": "smfcore:red_mud",
+      "amount": 8
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 7000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:titanium_residue",
+      "amount": 3
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:metal_chloride",
+      "amount": 6000
+    }
+  ]
+}

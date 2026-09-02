@@ -1,0 +1,25 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "duration": 200,
+  "eu": 16,
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:sodium_hypochlorite",
+      "amount": 2000
+    },
+    {
+      "fluid": "smfcore:salt_water",
+      "amount": 500
+    }
+  ]
+}

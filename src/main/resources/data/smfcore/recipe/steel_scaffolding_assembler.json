@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:assembler",
+  "eu": 8,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "tag": "c:plates/steel",
+      "amount": 4
+    },
+    {
+      "tag": "c:rods/steel",
+      "amount": 4
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:steel_scaffolding",
+      "amount": 4
+    }
+  ]
+}

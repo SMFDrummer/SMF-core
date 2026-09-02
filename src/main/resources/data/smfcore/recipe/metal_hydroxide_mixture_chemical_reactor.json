@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "duration": 200,
+  "eu": 8,
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:metal_chloride",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:metal_hydroxide_mixture",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:salt_water",
+      "amount": 500
+    }
+  ]
+}

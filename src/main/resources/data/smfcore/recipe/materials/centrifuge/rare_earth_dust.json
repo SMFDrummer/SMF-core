@@ -1,0 +1,28 @@
+{
+  "type": "modern_industrialization:centrifuge",
+  "eu": 32,
+  "duration": 200,
+  "item_inputs": {
+    "item": "smfcore:rare_earth_dust",
+    "amount": 3
+  },
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:neodymium_dust",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:yttrium_dust",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:cadmium_dust",
+      "amount": 1
+    },
+    {
+      "item": "smfcore:radioactive_residue",
+      "amount": 1,
+      "probability": 0.2
+    }
+  ]
+}

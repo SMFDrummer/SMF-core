@@ -1,0 +1,21 @@
+{
+  "type": "smfcore:cryogenic_fractionation_tower",
+  "duration": 200,
+  "eu": 128,
+  "fluid_inputs": [
+    {
+      "amount": 10000,
+      "fluid": "smfcore:helium_natural_gas"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 9900,
+      "fluid": "modern_industrialization:methane"
+    },
+    {
+      "amount": 100,
+      "fluid": "modern_industrialization:helium"
+    }
+  ]
+}

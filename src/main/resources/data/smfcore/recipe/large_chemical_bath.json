@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EFE"
+  ],
+  "key": {
+    "A": {
+      "item": "modern_industrialization:advanced_pump"
+    },
+    "B": {
+      "item": "smfcore:tempered_glass"
+    },
+    "C": {
+      "item": "modern_industrialization:digital_circuit"
+    },
+    "D": {
+      "item": "modern_industrialization:turbo_machine_hull"
+    },
+    "E": {
+      "item": "modern_industrialization:conveyor"
+    },
+    "F": {
+      "item": "modern_industrialization:titanium_rotor"
+    }
+  },
+  "result": {
+    "id": "smfcore:large_chemical_bath"
+  }
+}

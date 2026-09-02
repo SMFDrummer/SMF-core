@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "smfcore:adamantine_scrap"
+    },
+    {
+      "item": "smfcore:adamantine_scrap"
+    },
+    {
+      "item": "smfcore:adamantine_scrap"
+    },
+    {
+      "item": "smfcore:adamantine_scrap"
+    },
+    {
+      "item": "smfcore:cobalt_ingot"
+    },
+    {
+      "item": "smfcore:cobalt_ingot"
+    },
+    {
+      "item": "smfcore:cobalt_ingot"
+    },
+    {
+      "item": "smfcore:cobalt_ingot"
+    }
+  ],
+  "result": {
+    "id": "smfcore:adamantine_ingot"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "smfcore:large_electrolyzer",
+  "eu": 64,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:sodium_aluminate",
+      "amount": 1500
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 2000
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:aluminium_hydroxide_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "modern_industrialization:oxygen",
+      "amount": 200
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 100
+    },
+    {
+      "fluid": "modern_industrialization:sodium_hydroxide",
+      "amount": 750
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "smfcore:item/ammonium_sulfate_bucket"
+  }
+}

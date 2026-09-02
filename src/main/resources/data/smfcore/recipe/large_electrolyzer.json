@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EBE"
+  ],
+  "key": {
+    "A": {
+      "item": "modern_industrialization:robot_arm"
+    },
+    "B": {
+      "item": "modern_industrialization:digital_circuit"
+    },
+    "C": {
+      "item": "smfcore:nonconducting_casing"
+    },
+    "D": {
+      "item": "modern_industrialization:electrolyzer"
+    },
+    "E": {
+      "item": "modern_industrialization:large_pump"
+    }
+  },
+  "result": {
+    "id": "smfcore:large_electrolyzer"
+  }
+}

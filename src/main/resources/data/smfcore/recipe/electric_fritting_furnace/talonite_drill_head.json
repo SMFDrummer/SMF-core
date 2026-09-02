@@ -1,0 +1,21 @@
+{
+  "type": "smfcore:electric_fritting_furnace",
+  "duration": 200,
+  "eu": 16,
+  "item_inputs": [
+    {
+      "amount": 1,
+      "tag": "c:plates/talonite"
+    },
+    {
+      "amount": 1,
+      "tag": "c:ingots"
+    }
+  ],
+  "item_outputs": [
+    {
+      "amount": 1,
+      "item": "smfcore:talonite_drill_head"
+    }
+  ]
+}

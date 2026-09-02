@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:electrolyzer",
+  "eu": 32,
+  "duration": 600,
+  "fluid_inputs": {
+    "fluid": "smfcore:salt_water",
+    "amount": 1000
+  },
+  "item_outputs": {
+    "item": "smfcore:sodium_hydroxide_dust",
+    "amount": 3
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 500
+    },
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 500
+    }
+  ]
+}

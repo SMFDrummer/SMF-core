@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "smfcore:block/hyper_pressure_reactor"
+    }
+  }
+}

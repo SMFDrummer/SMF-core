@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "ABA",
+    "B B",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "tag": "c:plates/steel"
+    },
+    "B": {
+      "tag": "c:rods/steel"
+    }
+  },
+  "result": {
+    "id": "smfcore:steel_scaffolding",
+    "count": 4
+  }
+}

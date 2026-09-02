@@ -1,0 +1,13 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": {
+    "item": "smfcore:metal_hydroxide_mixture",
+    "amount": 2
+  },
+  "item_outputs": {
+    "item": "smfcore:metal_dioxide_mixture",
+    "amount": 1
+  }
+}

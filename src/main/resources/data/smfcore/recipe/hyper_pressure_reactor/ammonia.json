@@ -1,0 +1,32 @@
+{
+  "type": "smfcore:hyper_pressure_reactor",
+  "duration": 300,
+  "eu": 128,
+  "item_inputs": [
+    {
+      "item": "smfcore:metal_dioxide_mixture",
+      "amount": 1,
+      "probability": 0.01
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:nitrogen",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:hydrogen",
+      "amount": 3000
+    },
+    {
+      "fluid": "modern_industrialization:steam",
+      "amount": 200
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:ammonia",
+      "amount": 2000
+    }
+  ]
+}

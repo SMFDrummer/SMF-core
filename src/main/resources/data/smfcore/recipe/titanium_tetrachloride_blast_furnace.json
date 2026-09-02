@@ -1,0 +1,23 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 64,
+  "duration": 400,
+  "item_inputs": [
+    {
+      "item": "smfcore:titanium_residue",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:carbon_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": {
+    "fluid": "modern_industrialization:chlorine",
+    "amount": 2000
+  },
+  "fluid_outputs": {
+    "fluid": "smfcore:titanium_tetrachloride",
+    "amount": 1000
+  }
+}

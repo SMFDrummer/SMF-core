@@ -1,0 +1,30 @@
+{
+  "type": "smfcore:large_electrolyzer",
+  "eu": 128,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "smfcore:hydrated_rare_earth_chloride",
+      "amount": 3
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:molten_potassium_chloride",
+      "amount": 100,
+      "probability": 0.12
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:rare_earth_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "modern_industrialization:chlorine",
+      "amount": 1000
+    }
+  ]
+}

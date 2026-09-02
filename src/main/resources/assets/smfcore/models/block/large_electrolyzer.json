@@ -1,0 +1,13 @@
+{
+  "casing": "smfcore:nonconducting_casing",
+  "default_overlays": {
+    "fluid_auto": "modern_industrialization:block/overlays/fluid_auto",
+    "front": "smfcore:block/machines/large_electrolyzer/overlay_front",
+    "front_active": "smfcore:block/machines/large_electrolyzer/overlay_front_active",
+    "item_auto": "modern_industrialization:block/overlays/item_auto",
+    "output": "modern_industrialization:block/overlays/output",
+    "side": "smfcore:block/machines/large_electrolyzer/overlay_side",
+    "side_active": "smfcore:block/machines/large_electrolyzer/overlay_side_active"
+  },
+  "loader": "modern_industrialization:machine"
+}

@@ -1,0 +1,30 @@
+{
+  "type": "smfcore:hyper_pressure_reactor",
+  "duration": 600,
+  "eu": 128,
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:tetrafluoroethylene",
+      "amount": 4000
+    },
+    {
+      "fluid": "smfcore:ammonium_persulfate",
+      "amount": 500,
+      "probability": 0.05
+    },
+    {
+      "fluid": "modern_industrialization:steam",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:polytetrafluoroethylene",
+      "amount": 4000
+    },
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 200
+    }
+  ]
+}

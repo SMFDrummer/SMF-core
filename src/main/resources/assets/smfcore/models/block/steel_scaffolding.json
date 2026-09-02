@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "smfcore:block/steel_scaffolding_bottom",
+    "top": "smfcore:block/steel_scaffolding_top",
+    "side": "smfcore:block/steel_scaffolding"
+  }
+}

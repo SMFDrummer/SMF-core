@@ -1,0 +1,21 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "duration": 100,
+  "eu": 8,
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:ammonia",
+      "amount": 2000
+    },
+    {
+      "fluid": "modern_industrialization:sulfuric_acid",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:ammonium_sulfate",
+      "amount": 2000
+    }
+  ]
+}

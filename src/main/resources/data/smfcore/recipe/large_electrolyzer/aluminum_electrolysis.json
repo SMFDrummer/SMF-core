@@ -1,0 +1,28 @@
+{
+  "type": "smfcore:large_electrolyzer",
+  "eu": 64,
+  "duration": 200,
+  "item_inputs": [
+    {
+      "item": "smfcore:alumina_dust",
+      "amount": 1
+    },
+    {
+      "item": "modern_industrialization:carbon_dust",
+      "amount": 3
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:molten_cryolite",
+      "amount": 10,
+      "probability": 0.1
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "modern_industrialization:aluminum_dust",
+      "amount": 2
+    }
+  ]
+}

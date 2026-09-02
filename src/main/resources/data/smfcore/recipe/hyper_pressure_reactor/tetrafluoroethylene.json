@@ -1,0 +1,29 @@
+{
+  "type": "smfcore:hyper_pressure_reactor",
+  "duration": 400,
+  "eu": 128,
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:chloroform",
+      "amount": 2000
+    },
+    {
+      "fluid": "smfcore:hydrofluoric_acid",
+      "amount": 4000
+    },
+    {
+      "fluid": "modern_industrialization:steam",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:tetrafluoroethylene",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 6000
+    }
+  ]
+}

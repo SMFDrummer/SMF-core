@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "eu": 16,
+  "duration": 200,
+  "fluid_inputs": [
+    {
+      "fluid": "smfcore:hydrofluoric_acid",
+      "amount": 3000
+    },
+    {
+      "fluid": "smfcore:sodium_aluminate",
+      "amount": 1500
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "smfcore:cryolite_dust",
+      "amount": 1
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 3000
+    }
+  ]
+}

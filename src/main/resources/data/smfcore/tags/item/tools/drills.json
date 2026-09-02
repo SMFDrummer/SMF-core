@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "modern_industrialization:bronze_drill",
+    "modern_industrialization:copper_drill",
+    {
+      "id": "mekanism:digital_miner",
+      "required": false
+    },
+    "modern_industrialization:gold_drill",
+    "modern_industrialization:stainless_steel_drill",
+    "modern_industrialization:steel_drill",
+    "modern_industrialization:titanium_drill",
+    "smfcore:talonite_drill"
+  ]
+}

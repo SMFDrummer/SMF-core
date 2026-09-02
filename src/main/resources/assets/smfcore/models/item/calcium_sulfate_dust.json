@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "smfcore:item/calcium_sulfate_dust"
+  }
+}

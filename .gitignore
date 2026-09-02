@@ -38,3 +38,12 @@ run/
 **/src/generated/**/.cache/
 repo/
 !**/src/**/repo/
+.refer/
+
+### Kotlin ###
+.kotlin/
+
+### Reference / debug files (not part of the mod) ###
+/assets/
+/data/
+/net/

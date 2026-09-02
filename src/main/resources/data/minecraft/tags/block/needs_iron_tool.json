@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "smfcore:cobalt_ore",
+    "smfcore:deepslate_cobalt_ore",
+    "smfcore:stainless_steel_machine_pipe_casing",
+    "smfcore:steel_machine_pipe_casing",
+    "smfcore:stainless_steel_scaffolding"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EFE"
+  ],
+  "key": {
+    "A": {
+      "item": "modern_industrialization:advanced_pump"
+    },
+    "B": {
+      "item": "smfcore:stainless_steel_machine_pipe_casing"
+    },
+    "C": {
+      "item": "modern_industrialization:digital_circuit"
+    },
+    "D": {
+      "item": "modern_industrialization:turbo_machine_hull"
+    },
+    "E": {
+      "item": "smfcore:stainless_steel_scaffolding"
+    },
+    "F": {
+      "item": "modern_industrialization:conveyor"
+    }
+  },
+  "result": {
+    "id": "smfcore:large_autoclave"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "smfcore:raw_cobalt_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "smfcore:raw_cobalt"
+  }
+}

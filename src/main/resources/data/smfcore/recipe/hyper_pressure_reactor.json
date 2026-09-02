@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EBE"
+  ],
+  "key": {
+    "A": {
+      "item": "modern_industrialization:robot_arm"
+    },
+    "B": {
+      "item": "modern_industrialization:digital_circuit"
+    },
+    "C": {
+      "item": "modern_industrialization:clean_stainless_steel_machine_casing"
+    },
+    "D": {
+      "item": "modern_industrialization:chemical_reactor"
+    },
+    "E": {
+      "item": "modern_industrialization:large_pump"
+    }
+  },
+  "result": {
+    "id": "smfcore:hyper_pressure_reactor"
+  }
+}

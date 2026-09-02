@@ -1,0 +1,27 @@
+{
+  "type": "modern_industrialization:chemical_reactor",
+  "duration": 200,
+  "eu": 32,
+  "item_inputs": [
+    {
+      "item": "smfcore:rare_earth_hydroxide_mixture",
+      "amount": 1
+    }
+  ],
+  "fluid_inputs": [
+    {
+      "fluid": "modern_industrialization:hydrochloric_acid",
+      "amount": 1000
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "smfcore:rare_earth_chloride",
+      "amount": 1000
+    },
+    {
+      "fluid": "modern_industrialization:helium",
+      "amount": 10
+    }
+  ]
+}

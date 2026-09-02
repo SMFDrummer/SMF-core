@@ -1,0 +1,62 @@
+{
+  "type": "modern_industrialization:quarry",
+  "eu": 16,
+  "duration": 600,
+  "item_inputs": {
+    "item": "smfcore:talonite_drill",
+    "amount": 1,
+    "probability": 0.04
+  },
+  "item_outputs": [
+    {
+      "item": "minecraft:iron_ore",
+      "amount": 1,
+      "probability": 0.4
+    },
+    {
+      "item": "minecraft:coal_ore",
+      "amount": 1,
+      "probability": 0.4
+    },
+    {
+      "item": "smfcore:silver_ore",
+      "amount": 1,
+      "probability": 0.15
+    },
+    {
+      "item": "minecraft:diamond_ore",
+      "amount": 1,
+      "probability": 0.15
+    },
+    {
+      "item": "minecraft:copper_ore",
+      "amount": 1,
+      "probability": 0.4
+    },
+    {
+      "item": "minecraft:redstone_ore",
+      "amount": 1,
+      "probability": 0.2
+    },
+    {
+      "item": "minecraft:gold_ore",
+      "amount": 1,
+      "probability": 0.15
+    },
+    {
+      "item": "minecraft:lapis_ore",
+      "amount": 1,
+      "probability": 0.15
+    },
+    {
+      "item": "modern_industrialization:tungsten_ore",
+      "amount": 1,
+      "probability": 0.1
+    },
+    {
+      "item": "smfcore:cobalt_ore",
+      "amount": 1,
+      "probability": 0.2
+    }
+  ]
+}

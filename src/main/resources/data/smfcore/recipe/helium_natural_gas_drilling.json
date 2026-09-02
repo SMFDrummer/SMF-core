@@ -1,0 +1,14 @@
+{
+  "type": "modern_industrialization:oil_drilling_rig",
+  "eu": 16,
+  "duration": 200,
+  "item_inputs": {
+    "item": "smfcore:talonite_drill",
+    "amount": 1,
+    "probability": 0.02
+  },
+  "fluid_outputs": {
+    "fluid": "smfcore:helium_natural_gas",
+    "amount": 1000
+  }
+}

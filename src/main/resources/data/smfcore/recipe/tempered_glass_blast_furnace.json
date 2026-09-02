@@ -1,0 +1,13 @@
+{
+  "type": "modern_industrialization:blast_furnace",
+  "eu": 4,
+  "duration": 100,
+  "item_inputs": {
+    "item": "minecraft:glass",
+    "amount": 1
+  },
+  "item_outputs": {
+    "item": "smfcore:tempered_glass",
+    "amount": 1
+  }
+}

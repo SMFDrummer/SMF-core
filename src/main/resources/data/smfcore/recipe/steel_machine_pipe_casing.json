@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "tag": "c:plates/steel"
+    },
+    "B": {
+      "tag": "modern_industrialization:fluid_pipes"
+    },
+    "C": {
+      "item": "smfcore:steel_scaffolding"
+    }
+  },
+  "result": {
+    "id": "smfcore:steel_machine_pipe_casing",
+    "count": 2
+  }
+}
