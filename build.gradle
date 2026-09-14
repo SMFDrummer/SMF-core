@@ -89,11 +89,12 @@ base {
 // Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-// Ensure Gradle uses Java 21 specifically
+// Target Java 21 without pinning a vendor: the build has to work with whatever JDK 21 the
+// environment provides (CI installs Temurin 21, a dev machine may have Zulu 21). Pinning the
+// vendor here would force Gradle to provision that exact distribution on every other machine.
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
-        vendor = JvmVendorSpec.AZUL
     }
 }
 
