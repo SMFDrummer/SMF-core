@@ -23,3 +23,16 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      # Publishes the built mod jar as a workflow artifact, downloadable straight from the run
+      # page (Actions -> the run -> Artifacts -> smfcore-jar). This is a CI artifact only: it is
+      # not a release, and nothing is uploaded to a release or a package registry.
+      - name: Upload mod jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: smfcore-jar
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+            !build/libs/*-javadoc.jar
+          if-no-files-found: error
