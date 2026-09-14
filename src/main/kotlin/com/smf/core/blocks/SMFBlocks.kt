@@ -30,7 +30,7 @@ object SMFBlocks {
         DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, SMFCore.ID)
 
     val STEEL_SCAFFOLDING: DeferredBlock<Block> = REGISTRY.register("steel_scaffolding", Supplier {
-        Block(
+        ScaffoldingBlock(
             BlockBehaviour.Properties.of()
                 .strength(2.0f, 3.0f)
                 .sound(SoundType.METAL)
@@ -40,7 +40,7 @@ object SMFBlocks {
     })
 
     val STAINLESS_STEEL_SCAFFOLDING: DeferredBlock<SMFHideableBlock> = REGISTRY.register("stainless_steel_scaffolding", Supplier {
-        SMFHideableBlock(
+        HideableScaffoldingBlock(
             BlockBehaviour.Properties.of()
                 .strength(2.0f, 3.0f)
                 .sound(SoundType.METAL)
@@ -50,7 +50,7 @@ object SMFBlocks {
     })
 
     val TITANIUM_SCAFFOLDING: DeferredBlock<Block> = REGISTRY.register("titanium_scaffolding", Supplier {
-        Block(
+        ScaffoldingBlock(
             BlockBehaviour.Properties.of()
                 .strength(2.0f, 3.0f)
                 .sound(SoundType.METAL)
