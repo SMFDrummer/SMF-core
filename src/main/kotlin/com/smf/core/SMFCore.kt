@@ -10,6 +10,7 @@ import com.smf.core.enchantments.SMFEnchantments
 import com.smf.core.fluids.SMFFluids
 import com.smf.core.items.SMFItems
 import com.smf.core.machines.SMFMachines
+import com.smf.core.machines.multiblock.SMFHiddenBlockRestore
 import com.smf.core.machines.multiblock.SMFMultiblockBlockEntity
 import com.mojang.datafixers.util.Either
 import net.minecraft.client.renderer.ItemBlockRenderTypes
@@ -35,6 +36,7 @@ import net.neoforged.fml.loading.FMLEnvironment
 import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent
 import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.neoforge.event.tick.ServerTickEvent
 import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier
 import net.minecraft.resources.ResourceLocation
 import org.apache.logging.log4j.LogManager
@@ -195,6 +197,14 @@ class SMFCore(modEventBus: IEventBus, modContainer: ModContainer) {
                     )
                 }
             }
+        }
+
+        // Restores the blocks hidden by an assembled multiblock once its controller is gone.
+        // The removal itself cannot do it: setRemoved() also runs during chunk unload, where any
+        // level access would synchronously load a neighbour chunk back and deadlock the chunk
+        // system, so the restore is deferred to the next tick.
+        NeoForge.EVENT_BUS.addListener(ServerTickEvent.Post::class.java) { event ->
+            SMFHiddenBlockRestore.tick(event.server)
         }
 
         // Register event listeners - only if you have @SubscribeEvent methods

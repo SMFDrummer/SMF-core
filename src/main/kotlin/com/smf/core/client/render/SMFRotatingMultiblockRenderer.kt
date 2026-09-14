@@ -7,23 +7,33 @@ import com.mojang.math.Axis
 
 import com.smf.core.machines.multiblock.CapturedMember
 import com.smf.core.machines.multiblock.SMFMultiblockBlockEntity
+import net.minecraft.client.renderer.LightTexture
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.texture.OverlayTexture
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.util.Mth
+import net.minecraft.world.level.LightLayer
 import org.joml.Matrix3f
+import org.joml.Matrix4f
 import org.joml.Vector3f
+import kotlin.math.abs
 
 /**
  * Create-style rotating multiblock renderer for every SMF machine.
  *
  * - Extends MI's `MultiblockMachineBER`, so the wrench shape-preview, hatch-placement overlays
  *   and the machine's active overlay are preserved untouched.
- * - The hidden members (keys flagged [com.smf.core.machines.multiblock.SMFKeyFlag.HIDDEN]) are
- *   tessellated ONCE per assembly (capturing per-vertex AO and lighting) and replayed every frame
- *   with only a rotation matrix — no AO/lookup work per frame (Create's SuperByteBuffer pattern).
- *   Per-vertex AO and lighting therefore match the real blocks exactly.
+ * - The hidden members (keys flagged [com.smf.core.machines.multiblock.SMFKeyFlag.HIDDEN]) have
+ *   their *geometry* tessellated ONCE per assembly and replayed every frame with only a rotation
+ *   matrix (Create's SuperByteBuffer pattern).
+ * - Lighting is deliberately NOT baked. A baked per-vertex light/AO is frozen to the assembled
+ *   orientation, so every face that used to be occluded (rotated away from a neighbour, e.g. the
+ *   one sitting on the ground) would replay pitch black. Instead the packed light is looked up
+ *   from each face's *rotated* world position and the shading from its *rotated* normal, so the
+ *   animated structure follows the dimension's real, dynamic lighting while it spins.
  * - The angle is integrated per frame (`renderAngle += renderSpeed * dt`, Create's
  *   MechanicalBearing pattern): idle = still, run = smooth acceleration, recipe end = natural
  *   deceleration that stops in place. Never reverses, cascaded machines are independent.
@@ -96,37 +106,96 @@ class SMFRotatingMultiblockRenderer(context: BlockEntityRendererProvider.Context
             byRenderType.getOrPut(member.renderType) { ArrayList() }.add(member)
         }
 
-        poseStack.pushPose()
-        // Rotate around the machine's front-back axis through the controller's center.
-        poseStack.translate(0.5, 0.5, 0.5)
-        if (facing.axis == Direction.Axis.X) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(angle))
+        // Rotation around the machine's front-back axis through the controller's center. The same
+        // rotation is pushed as the pose and kept as a matrix, so that a vertex can also be mapped
+        // to its rotated world position for the per-frame light lookup below.
+        val rotationQuat = if (facing.axis == Direction.Axis.X) {
+            Axis.XP.rotationDegrees(angle)
         } else {
-            poseStack.mulPose(Axis.ZP.rotationDegrees(angle))
+            Axis.ZP.rotationDegrees(angle)
         }
+        val rotation = Matrix4f()
+            .translate(0.5f, 0.5f, 0.5f)
+            .rotate(rotationQuat)
+            .translate(-0.5f, -0.5f, -0.5f)
+
+        poseStack.pushPose()
+        poseStack.translate(0.5, 0.5, 0.5)
+        poseStack.mulPose(rotationQuat)
         poseStack.translate(-0.5, -0.5, -0.5)
 
         val pose = poseStack.last()
         val poseMatrix = pose.pose()
         val normalMatrix = Matrix3f(pose.normal())
         val normal = Vector3f()
+        val center = Vector3f()
+        val scratch = Vector3f()
+        val origin = be.blockPos
 
-        // Replay the baked vertices (bake once, transform every frame).
+        // Replay the captured geometry, lighting and shading it from the world as it rotates.
         for ((renderType, group) in byRenderType) {
             val buffer = bufferSource.getBuffer(renderType)
             for (member in group) {
-                for (v in member.data) {
-                    normal.set(v[10], v[11], v[12])
-                    normalMatrix.transform(normal)
-                    buffer.addVertex(poseMatrix, v[0], v[1], v[2])
-                        .setColor(v[3], v[4], v[5], v[6])
-                        .setUv(v[7], v[8])
-                        .setOverlay(OverlayTexture.NO_OVERLAY)
-                        .setLight(v[9].toInt())
-                        .setNormal(normal.x, normal.y, normal.z)
+                val data = member.data
+                var index = 0
+                while (index + 3 < data.size) {
+                    // One quad: 4 consecutive vertices written by tesselateBlock. Vanilla uses a
+                    // single light value per face, so one lookup per quad is enough.
+                    center.set(0.0f, 0.0f, 0.0f)
+                    for (k in 0 until 4) {
+                        val v = data[index + k]
+                        scratch.set(v[0], v[1], v[2])
+                        rotation.transformPosition(scratch)
+                        center.add(scratch)
+                    }
+                    center.mul(0.25f)
+                    val lightPos = BlockPos(
+                        origin.x + Mth.floor(center.x),
+                        origin.y + Mth.floor(center.y),
+                        origin.z + Mth.floor(center.z),
+                    )
+                    val quadLight = if (level.isLoaded(lightPos)) {
+                        LightTexture.pack(
+                            level.getBrightness(LightLayer.BLOCK, lightPos),
+                            level.getBrightness(LightLayer.SKY, lightPos),
+                        )
+                    } else {
+                        // Rotated outside the loaded area: fall back to the controller's own light.
+                        light
+                    }
+
+                    for (k in 0 until 4) {
+                        val v = data[index + k]
+                        normal.set(v[5], v[6], v[7])
+                        normalMatrix.transform(normal)
+                        val shade = diffuseShade(normal.x, normal.y, normal.z)
+                        buffer.addVertex(poseMatrix, v[0], v[1], v[2])
+                            .setColor(shade, shade, shade, 1.0f)
+                            .setUv(v[3], v[4])
+                            .setOverlay(OverlayTexture.NO_OVERLAY)
+                            .setLight(quadLight)
+                            .setNormal(normal.x, normal.y, normal.z)
+                    }
+                    index += 4
                 }
             }
         }
         poseStack.popPose()
+    }
+
+    /**
+     * Vanilla block face shading (`DiffuseLighting`), driven by the *rotated* normal so the
+     * shading follows the structure while it spins instead of staying frozen to its assembled
+     * orientation.
+     */
+    private fun diffuseShade(nx: Float, ny: Float, nz: Float): Float {
+        val ax = abs(nx)
+        val ay = abs(ny)
+        val az = abs(nz)
+        return when {
+            ay >= ax && ay >= az -> if (ny > 0.0f) 1.0f else 0.5f
+            ax >= az -> 0.6f
+            else -> 0.8f
+        }
     }
 }

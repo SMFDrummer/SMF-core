@@ -13,8 +13,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.data.ModelData
 import java.util.ArrayList
@@ -187,9 +189,10 @@ abstract class SMFMultiblockBlockEntity(
 
     /**
      * Tesselates the hidden members once through the vanilla block renderer and captures the
-     * resulting per-vertex data (positions in controller-relative space, per-vertex AO color,
-     * UVs, per-vertex light, normals). The renderer replays this data every frame with only a
-     * rotation matrix — no AO/lookup work per frame.
+     * resulting geometry (controller-relative positions, UVs, normals). Lighting and shading are
+     * intentionally not baked: the structure rotates, so the renderer recomputes the packed light
+     * from each vertex's rotated world position and the face shade from its rotated normal every
+     * frame — the animated structure then follows the dimension's real, dynamic lighting.
      */
     fun getOrBakeHiddenVertices(level: Level): List<CapturedMember>? {
         if (cachedHiddenVertices != null && cachedResourceVersion == clientResourceVersion) {
@@ -244,9 +247,14 @@ abstract class SMFMultiblockBlockEntity(
 
     override fun setRemoved() {
         super.setRemoved()
+        // Never touch the level here. setRemoved() also runs while a chunk unloads, and both
+        // getBlockState() on a not-yet-loaded neighbour and setBlockAndUpdate()'s neighbour
+        // updates would synchronously load that chunk back — the chunk system is mid-unload at
+        // that point, so this deadlocks and can leave the save inconsistent. The restore is
+        // recorded instead and applied on the next server tick (see SMFHiddenBlockRestore).
         val world = level
-        if (world != null && !world.isClientSide) {
-            updateHiddenBlocks(false)
+        if (world is ServerLevel) {
+            SMFHiddenBlockRestore.enqueue(world, worldPosition, getOrientation().facingDirection, smfShape)
         }
     }
 
@@ -258,12 +266,18 @@ abstract class SMFMultiblockBlockEntity(
                 continue
             }
             val worldPos = ShapeMatcher.toWorldPos(worldPosition, facing, templatePos)
+            // Skip members whose chunk is not loaded: reading them would load the chunk.
+            if (!world.isLoaded(worldPos)) {
+                continue
+            }
             val state = world.getBlockState(worldPos)
             val block = state.block
             if (block is HideableBlock) {
                 val target = state.setValue(block.hiddenProperty, hidden)
                 if (state !== target) {
-                    world.setBlockAndUpdate(worldPos, target)
+                    // UPDATE_CLIENTS only: the hidden property is purely visual, and skipping the
+                    // neighbour updates keeps this write from loading neighbouring chunks.
+                    world.setBlock(worldPos, target, Block.UPDATE_CLIENTS)
                 }
             }
         }
@@ -285,8 +299,11 @@ data class HiddenMember(
 )
 
 /**
- * One captured member: its material render layer and the baked per-vertex data
- * (13 floats per vertex: x,y,z, r,g,b,a, u,v, light, nx,ny,nz).
+ * One captured member: its material render layer and the captured per-vertex geometry
+ * (8 floats per vertex: x,y,z, u,v, nx,ny,nz). Lighting and shading are deliberately NOT baked —
+ * the structure rotates, so both are recomputed per frame from the world (see
+ * `SMFRotatingMultiblockRenderer`), which keeps every rotated face lit by the dimension's real
+ * light instead of the black silhouette a bake-time AO/light would freeze in.
  */
 data class CapturedMember(
     val renderType: RenderType,
