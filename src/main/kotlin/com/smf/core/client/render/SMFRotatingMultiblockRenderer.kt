@@ -128,8 +128,9 @@ class SMFRotatingMultiblockRenderer(context: BlockEntityRendererProvider.Context
         val poseMatrix = pose.pose()
         val normalMatrix = Matrix3f(pose.normal())
         val normal = Vector3f()
-        val center = Vector3f()
         val scratch = Vector3f()
+        // Reused so the per-frame light lookups stay allocation-free.
+        val lightPos = BlockPos.MutableBlockPos()
         val origin = be.blockPos
 
         // Replay the captured geometry, lighting and shading it from the world as it rotates.
@@ -139,26 +140,30 @@ class SMFRotatingMultiblockRenderer(context: BlockEntityRendererProvider.Context
                 val data = member.data
                 var index = 0
                 while (index + 3 < data.size) {
-                    // One quad: 4 consecutive vertices written by tesselateBlock. Vanilla uses a
-                    // single light value per face, so one lookup per quad is enough.
-                    center.set(0.0f, 0.0f, 0.0f)
+                    // One quad: 4 consecutive vertices written by tesselateBlock. Vanilla lights a
+                    // face with the single value of the block it sits in; averaging all four
+                    // rotated corners softens the block-granular steps the face makes as it sweeps
+                    // through the world while the structure turns.
+                    var blockLight = 0
+                    var skyLight = 0
+                    var sampled = 0
                     for (k in 0 until 4) {
                         val v = data[index + k]
                         scratch.set(v[0], v[1], v[2])
                         rotation.transformPosition(scratch)
-                        center.add(scratch)
-                    }
-                    center.mul(0.25f)
-                    val lightPos = BlockPos(
-                        origin.x + Mth.floor(center.x),
-                        origin.y + Mth.floor(center.y),
-                        origin.z + Mth.floor(center.z),
-                    )
-                    val quadLight = if (level.isLoaded(lightPos)) {
-                        LightTexture.pack(
-                            level.getBrightness(LightLayer.BLOCK, lightPos),
-                            level.getBrightness(LightLayer.SKY, lightPos),
+                        lightPos.set(
+                            origin.x + Mth.floor(scratch.x),
+                            origin.y + Mth.floor(scratch.y),
+                            origin.z + Mth.floor(scratch.z),
                         )
+                        if (level.isLoaded(lightPos)) {
+                            blockLight += level.getBrightness(LightLayer.BLOCK, lightPos)
+                            skyLight += level.getBrightness(LightLayer.SKY, lightPos)
+                            sampled++
+                        }
+                    }
+                    val quadLight = if (sampled > 0) {
+                        LightTexture.pack(blockLight / sampled, skyLight / sampled)
                     } else {
                         // Rotated outside the loaded area: fall back to the controller's own light.
                         light
@@ -184,18 +189,27 @@ class SMFRotatingMultiblockRenderer(context: BlockEntityRendererProvider.Context
     }
 
     /**
-     * Vanilla block face shading (`DiffuseLighting`), driven by the *rotated* normal so the
-     * shading follows the structure while it spins instead of staying frozen to its assembled
-     * orientation.
+     * Smooth version of vanilla's per-face shading (`DiffuseLighting`).
+     *
+     * Vanilla picks one of four constants from the face axis (up 1.0, down 0.5, north/south 0.8,
+     * east/west 0.6). That is fine for axis-aligned blocks, but on a *rotating* structure the
+     * dominant axis flips every 90 degrees, so the shading snapped between the constants — a
+     * visible brightness jump four times per revolution. Blending the same four values by the
+     * rotated normal's axis weights (a weighted average that sums to 1) keeps those exact values
+     * for axis-aligned faces — so an unrotated structure still matches an ordinary block — while
+     * the transition between them becomes continuous.
      */
     private fun diffuseShade(nx: Float, ny: Float, nz: Float): Float {
         val ax = abs(nx)
         val ay = abs(ny)
         val az = abs(nz)
-        return when {
-            ay >= ax && ay >= az -> if (ny > 0.0f) 1.0f else 0.5f
-            ax >= az -> 0.6f
-            else -> 0.8f
+        val total = ax + ay + az
+        if (total < 1.0e-4f) {
+            return 1.0f
         }
+        // The vertical weight vanishes as the normal goes horizontal, so the up/down sign flip
+        // at ny == 0 cannot introduce a step of its own.
+        val vertical = (if (ny > 0.0f) 1.0f else 0.5f) * ay
+        return (0.6f * ax + 0.8f * az + vertical) / total
     }
 }
